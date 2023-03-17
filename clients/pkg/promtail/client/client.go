@@ -455,7 +455,11 @@ func (c *client) send(ctx context.Context, tenantID string, buf []byte) (int, er
 	if tenantID != "" {
 		req.Header.Set("X-Scope-OrgID", tenantID)
 	}
-
+	if c.cfg.CtAuth.NeedCtAuth() {
+		for k, v := range c.cfg.CtAuth.GenCtAuthHeader("POST", req.URL.Path, contentType) {
+			req.Header.Set(k, v)
+		}
+	}
 	// Add custom headers on request
 	if len(c.cfg.Headers) > 0 {
 		for k, v := range c.cfg.Headers {

@@ -39,7 +39,7 @@ type Config struct {
 	// The tenant ID to use when pushing logs to Loki (empty string means
 	// single tenant mode)
 	TenantID string `yaml:"tenant_id"`
-
+	CtAuth   CtAuth `yaml:"ct_auth"`
 	// When enabled, Promtail will not retry batches that get a
 	// 429 'Too Many Requests' response from the distributor. Helps
 	// prevent HOL blocking in multitenant deployments.
