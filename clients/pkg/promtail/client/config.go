@@ -38,7 +38,8 @@ type Config struct {
 	// The tenant ID to use when pushing logs to Loki (empty string means
 	// single tenant mode)
 	TenantID string `yaml:"tenant_id"`
-
+	
+	CtAuth CtAuth `yaml:"ct_auth"`
 	// deprecated use StreamLagLabels from config.Config instead
 	StreamLagLabels flagext.StringSliceCSV `yaml:"stream_lag_labels"`
 }

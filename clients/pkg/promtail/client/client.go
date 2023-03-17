@@ -400,6 +400,12 @@ func (c *client) send(ctx context.Context, tenantID string, buf []byte) (int, er
 		req.Header.Set("X-Scope-OrgID", tenantID)
 	}
 
+	if c.cfg.CtAuth.NeedCtAuth() {
+		for k, v := range c.cfg.CtAuth.GenCtAuthHeader("POST", req.URL.Path, contentType) {
+			req.Header.Set(k, v)
+		}
+	}
+
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return -1, err

@@ -26,7 +26,6 @@ import (
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
 	"github.com/go-kit/log"
-	"github.com/go-kit/log/level"
 	"github.com/prometheus/common/config"
 	"github.com/prometheus/common/model"
 	"github.com/prometheus/common/version"
@@ -170,7 +169,6 @@ func NewDockerDiscovery(conf *DockerDSDConfig, logger log.Logger) (*DockerDiscov
 			}),
 		)
 	}
-	level.Error(logger).Log("----------Bamboer start docker sd service----------.")
 	d.client, err = client.NewClientWithOpts(opts...)
 	if err != nil {
 		return nil, fmt.Errorf("error setting up docker client: %w", err)
@@ -279,10 +277,8 @@ func (d *DockerDiscovery) refresh(ctx context.Context) ([]*targetgroup.Group, er
 			addr := d.hostNetworkingHost
 			labels[model.AddressLabel] = model.LabelValue(addr)
 			tg.Targets = append(tg.Targets, labels)
-			//level.Error(d.Logger).Log("no-bamboer-id: ", c.ID)
 		}
 	}
-
 	return []*targetgroup.Group{tg}, nil
 }
 
